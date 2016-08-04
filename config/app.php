@@ -166,11 +166,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        AbinaChess\Providers\AppServiceProvider::class,
+        // AbinaChess\Providers\BroadcastServiceProvider::class,
+        AbinaChess\Providers\AuthServiceProvider::class,
+        AbinaChess\Providers\EventServiceProvider::class,
+        AbinaChess\Providers\RouteServiceProvider::class,
 
     ],
 

@@ -31,4 +31,6 @@ Route::post('game', function() {
     // 1. Create a new game from input fields
     // 2. Display the play area (chess board) with the game uid
     // 2.a. From here, the js app takes over
+
+    return view('chess');
 });

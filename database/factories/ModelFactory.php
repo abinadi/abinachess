@@ -11,11 +11,27 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(AbinaChess\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(AbinaChess\Game::class, function (Faker\Generator $faker) {
+    return [
+        'black' => $faker->name,
+        'white' => $faker->name,
+        'history' => $faker->text(20)
+    ];
+});
+
+$factory->define(AbinaChess\Shout::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'shout' => $faker->text(35),
+        'game_uid' => AbinaChess\Game::random()->uid
     ];
 });

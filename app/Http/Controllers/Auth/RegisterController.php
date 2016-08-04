@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace AbinaChess\Http\Controllers\Auth;
 
-use App\User;
+use AbinaChess\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use AbinaChess\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
