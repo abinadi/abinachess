@@ -13,6 +13,8 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
+Vue.component('game-history', require('./components/GameHistory.vue'));
+Vue.component('shoutbox', require('./components/Shoutbox.vue'));
 Vue.component('chess', require('./components/Chess.vue'));
 
 var app = new Vue({

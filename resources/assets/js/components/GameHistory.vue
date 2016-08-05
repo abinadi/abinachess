@@ -1,0 +1,35 @@
+<template>
+    <section id="gamePlay">
+    <table class="table table-striped">
+        <thead>
+        <th>&nbsp;</th>
+        <th>White</th>
+        <th>Black</th>
+        <thead>
+        <tbody>
+            <tr v-for="(index, move) in moves">
+                <td>{{ index + 1 }}</td>
+                <td>{{ move.white }}</td>
+                <td>{{ move.black }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </section>
+</template>
+
+<script type="text/babel">
+export default {
+    props: ['moves'],
+
+    ready() {
+    }
+}
+</script>
+
+<style>
+    #gamePlay {
+        height: 380px;
+        max-height: 380px;
+        overflow: scroll;
+    }
+</style>

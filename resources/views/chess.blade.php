@@ -10,25 +10,6 @@
 
     <div class="container">
         <chess></chess>
-
-        <aside id="sidebar" class="col-md-4">
-            <section id="gameUid">
-                <h2>GAME UID</h2>
-            </section>
-
-            <section id="gamePlay">
-                <h2>Moves</h2>
-
-                <table class="table table-striped" id="moves">
-                <thead>
-                    <th>White</th>
-                    <th>Black</th>
-                <thead>
-                <tbody>
-                </tbody>
-                </table>
-            </section>
-        </aside>
     </div>
 
 @endsection
