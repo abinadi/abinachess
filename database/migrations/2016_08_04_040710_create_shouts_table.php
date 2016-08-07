@@ -17,7 +17,7 @@ class CreateShoutsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('shout');
-            $table->integer('game_uid')->unsigned();
+            $table->string('game_uid', 40);
             $table->foreign('game_uid')->references('uid')->on('games');
             $table->timestamps();
         });

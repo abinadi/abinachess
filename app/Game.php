@@ -1,10 +1,25 @@
 <?php
 namespace AbinaChess;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Game
+ *
+ * @package AbinaChess
+ * @property int $id
+ * @property string $uid
+ * @property string black
+ * @property string white
+ * @property string $history
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class Game extends Model
 {
+    protected $fillable = ['black', 'white'];
+
     public static function boot()
     {
         parent::boot();
@@ -17,7 +32,7 @@ class Game extends Model
         static::creating(function ($model) {
             $uid = self::generateUid();
 
-            while(self::uidExists($uid)) {
+            while (self::uidExists($uid)) {
                 $uid = self::generateUid();
             }
 
@@ -30,7 +45,7 @@ class Game extends Model
      */
     public static function random()
     {
-         return self::all()->random(1);
+        return self::all()->random(1);
     }
 
     /**
@@ -42,7 +57,16 @@ class Game extends Model
     {
         $game = self::where('uid', $uid)->first();
 
-        return ! is_null($game);
+        return !is_null($game);
+    }
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public static function getGameOrFail($uid)
+    {
+        return self::where('uid', $uid)->firstOrFail();
     }
 
     /**
@@ -51,6 +75,11 @@ class Game extends Model
     public function setUid($value)
     {
         $this->attributes['uid'] = self::generateUid();
+    }
+
+    public function shouts()
+    {
+        return $this->hasMany('AbinaChess\Shout', 'game_uid', 'uid');
     }
 
     /**
@@ -68,7 +97,7 @@ class Game extends Model
      */
     private function generateUUid($seed = null)
     {
-        if(is_null($seed)) {
+        if (is_null($seed)) {
             $seed = rand();
         }
 

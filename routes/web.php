@@ -10,27 +10,25 @@ Route::get('/', function () {
 /**
  * Join Form - enter game uuid
  */
-Route::get('join', function() {});
+Route::get('join', function () {
+});
 
 /**
  * Process Join Form
  */
-Route::post('join', function() {});
+Route::post('join', function () {
+});
 
 /**
  * Start new game form - 3 part multi page form
  */
-Route::get('start', function() {
+Route::get('start', function () {
     return view('start');
 });
 
 /**
  * Process start form and
  */
-Route::post('game', function() {
-    // 1. Create a new game from input fields
-    // 2. Display the play area (chess board) with the game uid
-    // 2.a. From here, the js app takes over
+Route::post('game', ['as' => 'game.store', 'uses' => GameController::class . '@store']);
 
-    return view('chess');
-});
+Route::get('game/{uid}', ['as' => 'game.show', 'uses' => GameController::class . '@show']);

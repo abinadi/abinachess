@@ -172,6 +172,8 @@ return [
         AbinaChess\Providers\EventServiceProvider::class,
         AbinaChess\Providers\RouteServiceProvider::class,
 
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
     ],
 
     /*

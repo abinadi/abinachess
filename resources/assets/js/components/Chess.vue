@@ -3,7 +3,7 @@
 
     <aside id="sidebar" class="col-md-4">
         <section id="gameUid">
-            <h2>GAME UID</h2>
+            <h2>Game UID: {{ uid }}</h2>
         </section>
 
         <game-history :moves="history"></game-history>
@@ -16,36 +16,22 @@
 export default {
     data() {
         return {
-            history: []
+            history: [],
+            game: null,
+            board: null,
+            uid: gameUid
         };
     },
 
-    ready() {
-        // This keeps track of the game (all the moves, etc)
-        var game = new Chess();
-
-        // Get a handle to use `this` inside of functions
-        var that = this;
-
-        // Options to create the chess board
-        var options = {
-            draggable: true,
-            position: 'start',
-            onDrop: onDrop,
-            onSnapEnd: onSnapEnd
-        };
-
-        // Create the chess board using the aforementioned options
-        var board = ChessBoard('board', options);
-
+    methods: {
         /*
          * When a piece is dropped, check it is a valid move
          * If it is, allow it and update the history (which will be broadcast to the child component that displays
          * the moves in algebraic notation).
          * Otherwise, don't allow it.
          */
-        var onDrop = function(source, target) {
-            var move = game.move({
+        onDrop: function(source, target) {
+            var move = this.game.move({
                 from: source,
                 to: target,
                 promotion: 'q'
@@ -55,16 +41,16 @@ export default {
                 return 'snapback';
             }
 
-            that.history = historyToArrayOfObjects(game.history());
-        };
+            this.history = this.historyToArrayOfObjects(this.game.history());
+        },
 
         /*
          * Once the move is deemed legit, update the whole board ... this is to account for things
          * like castleing and en-passant, etc.
          */
-        var onSnapEnd = function() {
-            board.position(game.fen());
-        }
+        onSnapEnd: function() {
+            this.board.position(this.game.fen());
+        },
 
         /*
          * Convert the history array into a more workable array of objects that looks like this (example):
@@ -74,7 +60,7 @@ export default {
          *      ...
          * ]
          */
-        var historyToArrayOfObjects = function(history) {
+        historyToArrayOfObjects: function(history) {
             var historyObject = [];
 
             for(var i = 0; i < history.length; i+=2) {
@@ -86,7 +72,23 @@ export default {
             };
 
             return historyObject;
+        }
+    },
+
+    ready() {
+        // Have chess.js keep track of the game play
+        this.game = new Chess();
+
+        // Options to create the chess board
+        var options = {
+            draggable: true,
+            position: 'start',
+            onDrop: this.onDrop,
+            onSnapEnd: this.onSnapEnd
         };
+
+        // Create the chess board using the aforementioned options
+        this.board = ChessBoard('board', options);
     }
 }
 </script>

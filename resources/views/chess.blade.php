@@ -17,6 +17,9 @@
 @section('script-footer')
     <script src="/js/chessboardjs/js/chessboard-0.3.0.js"></script>
     <script src="/js/chessjs/chess.js"></script>
+    <script>
+        var gameUid = '{{ $game->uid }}';
+    </script>
 
     @parent
 @endsection
