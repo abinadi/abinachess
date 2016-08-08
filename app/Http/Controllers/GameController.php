@@ -42,7 +42,7 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $uid
+     * @param string $uid
      * @param string $color
      * @return \Illuminate\Http\Response
      */
@@ -56,6 +56,28 @@ class GameController extends Controller
 
         return view('chess')->with(compact('game', 'color'));
     }
+
+	/**
+	 * @param string $uid
+	 *
+	 * @return Response
+	 */
+	public function joinForm($uid)
+	{
+		$game = Game::getGameOrFail($uid);
+
+		return view('join')->with(compact('game'));
+	}
+
+	/**
+	 * @param string $uid
+	 *
+	 * @return Redirect
+	 */
+	public function join($uid)
+	{
+		return redirect()->route('game.show', ['uid' => $uid, 'color' => $request->input('color')]);
+	}
 
     /**
      * Show the form for editing the specified resource.

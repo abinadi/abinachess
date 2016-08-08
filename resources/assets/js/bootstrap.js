@@ -20,6 +20,12 @@ require('bootstrap-sass/assets/javascripts/bootstrap');
 window.Vue = require('vue');
 require('vue-resource');
 
+window.Pusher = require('pusher-js');
+
+import Echo from "laravel-echo";
+
+window.echo = new Echo('d3b2371175bc87a5b41c');
+
 /**
  * We'll register a HTTP interceptor to attach the "XSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware

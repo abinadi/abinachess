@@ -8,16 +8,14 @@ Route::get('/', function () {
 });
 
 /**
- * Join Form - enter game uuid
+ * Process mini join form from the home page
  */
-Route::get('join', function () {
-    return view('home');
-});
+Route::post('join', function (Request $request) {
+	if(Game::uidExists($request->input('uid'))) {
+		return redirect()->route('game.join', ['uid' => $request->input('uid')]);
+	}
 
-/**
- * Process Join Form
- */
-Route::post('join', function () {
+	return redirect('/')->with(['message' => 'That game does not exist.']);
 });
 
 /**
@@ -28,8 +26,17 @@ Route::get('start', function () {
 });
 
 /**
- * Process start form and
+ * Join Form - to join a game
+ */
+Route::get('game/{uid}/join', ['as' => 'game.join', 'uses' => GameController::class . '@joinForm']);
+Route::post('game/{uid}/join', ['as' => 'game.joinredirect', 'uses' => GameController::class . '@join']);
+
+/**
+ * Process the start form
  */
 Route::post('game', ['as' => 'game.store', 'uses' => GameController::class . '@store']);
 
+/**
+ * Display the chess board and start playing!
+ */
 Route::get('game/{uid}/{color?}', ['as' => 'game.show', 'uses' => GameController::class . '@show']);

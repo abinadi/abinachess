@@ -58,7 +58,7 @@ class Game extends Model
      *
      * @return boolean
      */
-    private static function uidExists($uid)
+    public static function uidExists($uid)
     {
         $game = self::where('uid', $uid)->first();
 

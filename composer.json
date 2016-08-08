@@ -8,6 +8,7 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "laravel/framework": "5.3.*",
         "php": ">=5.6.4",
+		"pusher/pusher-php-server": "~2.0",
         "ryanhs/chess.php": "1.0"
     },
     "require-dev": {
