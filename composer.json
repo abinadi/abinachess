@@ -5,9 +5,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
+        "barryvdh/laravel-ide-helper": "^2.2",
         "laravel/framework": "5.3.*",
-        "barryvdh/laravel-ide-helper": "^2.2"
+        "php": ">=5.6.4",
+        "ryanhs/chess.php": "1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

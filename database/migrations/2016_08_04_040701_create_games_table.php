@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->string('black');
             $table->string('white');
             $table->text('history')->nullable();
+            $table->text('pgn')->nullable();
             $table->timestamps();
         });
     }

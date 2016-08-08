@@ -19,7 +19,8 @@ export default {
             history: [],
             game: null,
             board: null,
-            uid: gameUid
+            uid: gameUid,
+            color: color
         };
     },
 
@@ -30,7 +31,7 @@ export default {
          * the moves in algebraic notation).
          * Otherwise, don't allow it.
          */
-        onDrop: function(source, target) {
+        onDrop: function(source, target, piece, newPos, oldPos, orientation) {
             var move = this.game.move({
                 from: source,
                 to: target,
@@ -41,7 +42,11 @@ export default {
                 return 'snapback';
             }
 
+            // Update game history section
             this.history = this.historyToArrayOfObjects(this.game.history());
+
+            // Send move to server
+            this.sendMoveToServer(move);
         },
 
         /*
@@ -72,6 +77,44 @@ export default {
             };
 
             return historyObject;
+        },
+
+        /*
+         * When the page first loads, get the game and potential history from the server
+         */
+        getGameFromServer: function (uid) {
+            this.$http.get('/api/game/' + uid)
+                .then((response) => {
+                    if(response.data.pgn != null) {
+                        this.updateBoard(response.data);
+                    }
+                }, (response) => {
+                    console.log('error');
+                    console.log(response);
+                });
+        },
+
+        /*
+         * After each move you make, send that move to the server
+         */
+        sendMoveToServer: function (move) {
+            this.$http.post('/api/game/' + this.uid, {move:move})
+                .then((response) => {
+                    // success
+                }, (response) => {
+                    // error
+                    console.log('error');
+                    console.log(response);
+                });
+        },
+
+        /*
+         * After getting the game from the server, update the board to reflect the current position
+         */
+        updateBoard: function(g) {
+            this.game.load_pgn(g.pgn);
+            this.onSnapEnd();
+            this.history = this.historyToArrayOfObjects(this.game.history());
         }
     },
 
@@ -84,11 +127,15 @@ export default {
             draggable: true,
             position: 'start',
             onDrop: this.onDrop,
-            onSnapEnd: this.onSnapEnd
+            onSnapEnd: this.onSnapEnd,
+            orientation: this.color
         };
 
         // Create the chess board using the aforementioned options
         this.board = ChessBoard('board', options);
+
+        // Bring in game from the server
+        this.getGameFromServer(this.uid);
     }
 }
 </script>

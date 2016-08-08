@@ -19,6 +19,7 @@
     <script src="/js/chessjs/chess.js"></script>
     <script>
         var gameUid = '{{ $game->uid }}';
+        var color = '{{ $color }}';
     </script>
 
     @parent

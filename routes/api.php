@@ -1,5 +1,6 @@
 <?php
 
+use AbinaChess\Game;
 use Illuminate\Http\Request;
 
 /*
@@ -13,6 +14,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::get('/game/{uid}', function(Request $request, $uid) {
+    return Game::getGameOrFail($uid);
+});
+
+Route::post('/game/{uid}', ['as'=>'game.move', 'uses' => GameApi::class . '@move']);
+
+Route::get('/shouts/{uid}', function(Request $request, $uid) {
+    $game = Game::getGameOrFail($uid);
+    return $game->shouts;
 });

@@ -11,6 +11,7 @@ Route::get('/', function () {
  * Join Form - enter game uuid
  */
 Route::get('join', function () {
+    return view('home');
 });
 
 /**
@@ -31,4 +32,4 @@ Route::get('start', function () {
  */
 Route::post('game', ['as' => 'game.store', 'uses' => GameController::class . '@store']);
 
-Route::get('game/{uid}', ['as' => 'game.show', 'uses' => GameController::class . '@show']);
+Route::get('game/{uid}/{color?}', ['as' => 'game.show', 'uses' => GameController::class . '@show']);

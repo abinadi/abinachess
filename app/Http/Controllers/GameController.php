@@ -11,26 +11,6 @@ use AbinaChess\Http\Requests;
 class GameController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Requests\GameRequest $request
@@ -40,35 +20,41 @@ class GameController extends Controller
     public function store(Requests\GameRequest $request, Game $game)
     {
         if ($request->color === 'random') {
-            list($white, $black) = $this->assignRandomColor($request);
+            list($white, $black, $color) = $this->assignRandomColor($request);
 
             $game->white = $white;
             $game->black = $black;
         } elseif ($request->color === 'white') {
             $game->white = $request->name;
             $game->black = $request->opponent;
+            $color = 'white';
         } else {
             $game->white = $request->opponent;
             $game->black = $request->name;
+            $color = 'black';
         }
 
         $game->save();
 
-        return redirect()->route('game.show', ['uid' => $game->uid]);
+        return redirect()->route('game.show', ['uid' => $game->uid, 'color' => $color]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int $uid
+     * @param string $color
      * @return \Illuminate\Http\Response
      */
-    public function show($uid)
+    public function show($uid, $color = null)
     {
+        if(is_null($color)) {
+            return redirect()->route('game.join', ['uid' => $uid]);
+        }
+
         $game = Game::getGameOrFail($uid);
 
-        // 2. Display the play area (chess board) with the game uid
-        return view('chess')->with(compact('game'));
+        return view('chess')->with(compact('game', 'color'));
     }
 
     /**
@@ -117,11 +103,13 @@ class GameController extends Controller
         if ($rand == 1) {
             $white = $request->name;
             $black = $request->opponent;
+            $color = 'white';
         } else {
             $white = $request->opponent;
             $black = $request->name;
+            $color = 'black';
         }
 
-        return [$white, $black];
+        return [$white, $black, $color];
     }
 }

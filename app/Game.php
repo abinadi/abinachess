@@ -8,17 +8,22 @@ use Illuminate\Database\Eloquent\Model;
  * Class Game
  *
  * @package AbinaChess
- * @property int $id
- * @property string $uid
+ * @property int id
+ * @property string uid
  * @property string black
  * @property string white
- * @property string $history
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property string history
+ * @property string pgn
+ * @property Carbon created_at
+ * @property Carbon updated_at
  */
 class Game extends Model
 {
     protected $fillable = ['black', 'white'];
+
+    protected $casts = [
+        'history' => 'array'
+    ];
 
     public static function boot()
     {
