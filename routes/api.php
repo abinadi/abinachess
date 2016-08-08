@@ -1,6 +1,8 @@
 <?php
 
+use AbinaChess\Events\ShoutWasPosted;
 use AbinaChess\Game;
+use AbinaChess\Shout;
 use Illuminate\Http\Request;
 
 /*
@@ -27,4 +29,18 @@ Route::post('/game/{uid}', ['as'=>'game.move', 'uses' => GameApi::class . '@move
 Route::get('/shouts/{uid}', function(Request $request, $uid) {
     $game = Game::getGameOrFail($uid);
     return $game->shouts;
+});
+
+Route::post('/shouts/{uid}', function(Request $request, $uid) {
+	$game = Game::getGameOrFail($uid);
+
+	$shout = new Shout();
+
+	$shout->name = $request->input('name');
+	$shout->shout = $request->input('shout');
+	$shout->game_uid = $game->uid;
+
+	$shout->save();
+
+	event(new ShoutWasPosted($shout));
 });

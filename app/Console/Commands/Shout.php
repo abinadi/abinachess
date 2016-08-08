@@ -2,6 +2,7 @@
 
 namespace AbinaChess\Console\Commands;
 
+use AbinaChess\Shout as ShoutModel;
 use Illuminate\Console\Command;
 
 class Shout extends Command
@@ -37,6 +38,8 @@ class Shout extends Command
      */
     public function handle()
     {
-        //
+		$shout = ShoutModel::find(1);
+
+		event(new \AbinaChess\Events\ShoutWasPosted($shout));
     }
 }

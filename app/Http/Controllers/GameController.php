@@ -3,6 +3,7 @@
 namespace AbinaChess\Http\Controllers;
 
 use AbinaChess\Game;
+use AbinaChess\Http\Requests\JoinRequest;
 use AbinaChess\Shout;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class GameController extends Controller
      */
     public function show($uid, $color = null)
     {
-        if(is_null($color)) {
+        if (is_null($color)) {
             return redirect()->route('game.join', ['uid' => $uid]);
         }
 
@@ -57,27 +58,27 @@ class GameController extends Controller
         return view('chess')->with(compact('game', 'color'));
     }
 
-	/**
-	 * @param string $uid
-	 *
-	 * @return Response
-	 */
-	public function joinForm($uid)
-	{
-		$game = Game::getGameOrFail($uid);
+    /**
+     * @param string $uid
+     *
+     * @return Response
+     */
+    public function joinForm($uid)
+    {
+        $game = Game::getGameOrFail($uid);
 
-		return view('join')->with(compact('game'));
-	}
+        return view('join')->with(compact('game'));
+    }
 
-	/**
-	 * @param string $uid
-	 *
-	 * @return Redirect
-	 */
-	public function join($uid)
-	{
-		return redirect()->route('game.show', ['uid' => $uid, 'color' => $request->input('color')]);
-	}
+    /**
+     * @param JoinRequest $request
+     * @param string $uid
+     * @return Redirect
+     */
+    public function join(JoinRequest $request, $uid)
+    {
+        return redirect()->route('game.show', ['uid' => $uid, 'color' => $request->input('color')]);
+    }
 
     /**
      * Show the form for editing the specified resource.

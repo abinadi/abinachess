@@ -10,7 +10,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ShoutWasPosted implements ShouldBroadcast
+class ShoutWasPosted extends Event implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
@@ -22,11 +22,13 @@ class ShoutWasPosted implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Shout $shout
      */
     public function __construct(Shout $shout)
     {
         $this->shout = $shout;
+
+        //$this->dontBroadcastToCurrentUser();
     }
 
     /**

@@ -20,6 +20,7 @@
     <script>
         var gameUid = '{{ $game->uid }}';
         var color = '{{ $color }}';
+		var player = '{{ $game->$color }}';
     </script>
 
     @parent

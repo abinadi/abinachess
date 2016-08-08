@@ -1,5 +1,9 @@
 <template>
-    <div id="board" class="col-md-8"></div>
+    <div class="col-md-8">
+        <p class="player_opponent" v-bind:class="{ 'active' : oturn }">{{ opponent }}</p>
+        <div id="board"></div>
+        <p class="player_name" v-bind:class="{ 'active' : pturn }">{{ name }}</p>
+    </div>
 
     <aside id="sidebar" class="col-md-4">
         <section id="gameUid">
@@ -20,7 +24,11 @@ export default {
             game: null,
             board: null,
             uid: gameUid,
-            color: color
+            color: color,
+            name: player,
+            opponent: null,
+            oturn: false,
+            pturn: false
         };
     },
 
@@ -47,6 +55,9 @@ export default {
 
             // Send move to server
             this.sendMoveToServer(move);
+
+            // Update whose turn it is
+            this.updateTurn();
         },
 
         /*
@@ -88,6 +99,13 @@ export default {
                     if(response.data.pgn != null) {
                         this.updateBoard(response.data);
                     }
+                    var w = response.data.white;
+                    var b = response.data.black;
+                    if(w == this.name) {
+                        this.opponent = b;
+                    } else {
+                        this.opponent = w;
+                    }
                 }, (response) => {
                     console.log('error');
                     console.log(response);
@@ -115,6 +133,16 @@ export default {
             this.game.load_pgn(g.pgn);
             this.onSnapEnd();
             this.history = this.historyToArrayOfObjects(this.game.history());
+        },
+
+        updateTurn: function(){
+            if((this.game.turn() == 'b' && this.color == 'black') || (this.game.turn() == 'w' && this.color == 'white')) {
+                this.pturn = true;
+                this.oturn = false;
+            } else {
+                this.pturn = false;
+                this.oturn = true;
+            }
         }
     },
 
@@ -136,7 +164,17 @@ export default {
 
         // Bring in game from the server
         this.getGameFromServer(this.uid);
+
+        // whose turn is it?
+        this.updateTurn();
     }
 }
 </script>
 
+<style>
+    .active {
+        background-color: crimson;
+        color: #ffffff;
+        font-weight: bold;
+    }
+</style>
