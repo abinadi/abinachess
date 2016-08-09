@@ -50,9 +50,17 @@ export default {
 
         listen() {
             echo.channel('abinachess_shout.' + this.uid)
-                .listen('ShoutWasPosted', event => {
+                .listen('AbinaChess\Events\ShoutWasPosted', function(event) {
+                    console.log('long');
                     console.log(event);
                     this.shouts.push(event.shout);
+                    console.log(this.shouts);
+                })
+                .listen('ShoutWasPosted', function(event) {
+                    console.log('short')
+                    console.log(event);
+                    this.shouts.push(event.shout);
+                    console.log(this.shouts);
                 });
         }
 

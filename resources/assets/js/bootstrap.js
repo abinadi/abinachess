@@ -23,7 +23,10 @@ window.Pusher = require('pusher-js');
 
 import Echo from "laravel-echo";
 
-window.echo = new Echo('d3b2371175bc87a5b41c');
+window.echo = new Echo({
+    connector: 'pusher',
+    pusherKey: 'd3b2371175bc87a5b41c'
+});
 
 /**
  * We'll register a HTTP interceptor to attach the "XSRF" header to each of
@@ -33,6 +36,7 @@ window.echo = new Echo('d3b2371175bc87a5b41c');
 
 Vue.http.interceptors.push(function (request, next) {
     request.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
+    request.headers['X-Socket-Id'] = echo.socketId();
 
     next();
 });

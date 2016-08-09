@@ -8,6 +8,13 @@ Route::get('/', function () {
 });
 
 /**
+ * pusher looks for this route... there is a way to do this, but until I find out how... there is this:
+ */
+Route::post('broadcasting/socket', function() {
+    \Illuminate\Broadcasting\BroadcastController::class . '@rememberSocket';
+});
+
+/**
  * Process mini join form from the home page
  */
 Route::post('join', function (Request $request) {
