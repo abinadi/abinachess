@@ -40,6 +40,10 @@ export default {
          * Otherwise, don't allow it.
          */
         onDrop(source, target, piece, newPos, oldPos, orientation) {
+            if(this.canMove() === false) {
+                return 'snapback';
+            }
+
             var move = this.game.move({
                 from: source,
                 to: target,
@@ -58,6 +62,14 @@ export default {
 
             // Update whose turn it is
             this.updateTurn();
+        },
+
+        canMove() {
+            if(this.oturn) {
+                return false;
+            }
+
+            return true;
         },
 
         /*
@@ -106,6 +118,8 @@ export default {
                     } else {
                         this.opponent = w;
                     }
+
+                    this.updateTurn();
                 }, (response) => {
                     console.log('error');
                     console.log(response);
