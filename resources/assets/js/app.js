@@ -13,6 +13,12 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
+Vue.directive('autoscroll', {
+    update() {
+        this.el.scrollTop = this.el.scrollHeight;
+    }
+});
+
 Vue.component('game-history', require('./components/GameHistory.vue'));
 Vue.component('shoutbox', require('./components/Shoutbox.vue'));
 Vue.component('chess', require('./components/Chess.vue'));

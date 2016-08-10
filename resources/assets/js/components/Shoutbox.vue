@@ -1,11 +1,11 @@
 <template>
     <section id="shoutbox-area">
-        <ul class="list-group">
+        <ul class="list-group" v-autoscroll="shouts">
             <li v-for="shout in shouts">
                 <strong>{{ shout.name }}</strong>: {{ shout.shout }}
             </li>
         </ul>
-        <input type="text" @keyup.enter="shoutIt" v-model="shout" placeholder="Type something here...">
+        <input type="text" @keyup.enter="shoutIt" v-model="shout" class="form-control" placeholder="Type something here...">
     </section>
 </template>
 
@@ -32,8 +32,6 @@ export default {
         },
 		
 		shoutIt(event) {
-            console.log(this.shout);
-
 			var payload = {
 				name: this.player,
 				shout: event.target.value
@@ -50,20 +48,10 @@ export default {
 
         listen() {
             echo.channel('abinachess_shout.' + this.uid)
-                .listen('AbinaChess\Events\ShoutWasPosted', function(event) {
-                    console.log('long');
-                    console.log(event);
-                    this.shouts.push(event.shout);
-                    console.log(this.shouts);
-                })
                 .listen('ShoutWasPosted', function(event) {
-                    console.log('short')
-                    console.log(event);
                     this.shouts.push(event.shout);
-                    console.log(this.shouts);
-                });
+                }.bind(this));
         }
-
     },
 
     ready() {
@@ -75,9 +63,9 @@ export default {
 </script>
 
 <style>
-    #shoutbox-area {
-        height: 380px;
-        max-height: 380px;
+    #shoutbox-area ul {
+        height: 350px;
+        max-height: 350px;
         overflow: scroll;
     }
 

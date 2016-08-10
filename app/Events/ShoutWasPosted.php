@@ -28,7 +28,7 @@ class ShoutWasPosted extends Event implements ShouldBroadcast
     {
         $this->shout = $shout;
 
-        //$this->dontBroadcastToCurrentUser();
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**
