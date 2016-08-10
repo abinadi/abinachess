@@ -2,8 +2,8 @@
 
 namespace AbinaChess\Http\Controllers;
 
+use AbinaChess\Events\MoveWasMade;
 use AbinaChess\Game;
-use AbinaChess\Http\Requests;
 use AbinaChess\Http\Requests\MoveRequest;
 use Ryanhs\Chess\Chess;
 
@@ -25,6 +25,8 @@ class GameApi extends Controller
         $game->pgn = $this->createPgn($chess, $game->history);
 
         $game->save();
+
+        event(new MoveWasMade($game));
     }
 
     /**

@@ -26,11 +26,12 @@
 @section('content')
     <div class="container">
         <section class="col-md-4 col-md-offset-4">
-            <form class="form-inline centered_form">
+            <form action="/join" method="post" class="form-inline centered_form">
                 <div class="form-group">
-                    <label for="game_uid">Join a game</label>
-                    <input type="text" name="game_uid" id="game_uid" class="form-control" placeholder="ex: p4mf98">
-                    <button type="submit" class="btn btn-primary">>></button>
+                    {{ csrf_field() }}
+                    <label for="uid">Join a game</label>
+                    <input type="text" name="uid" id="uid" class="form-control" placeholder="ex: p4mf98">
+                    <button type="submit" class="btn btn-primary">&raquo;</button>
                 </div>
             </form>
         </section>

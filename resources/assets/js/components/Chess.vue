@@ -39,7 +39,7 @@ export default {
          * the moves in algebraic notation).
          * Otherwise, don't allow it.
          */
-        onDrop: function(source, target, piece, newPos, oldPos, orientation) {
+        onDrop(source, target, piece, newPos, oldPos, orientation) {
             var move = this.game.move({
                 from: source,
                 to: target,
@@ -64,7 +64,7 @@ export default {
          * Once the move is deemed legit, update the whole board ... this is to account for things
          * like castleing and en-passant, etc.
          */
-        onSnapEnd: function() {
+        onSnapEnd() {
             this.board.position(this.game.fen());
         },
 
@@ -76,12 +76,12 @@ export default {
          *      ...
          * ]
          */
-        historyToArrayOfObjects: function(history) {
+        historyToArrayOfObjects(history) {
             var historyObject = [];
 
             for(var i = 0; i < history.length; i+=2) {
                 if(history[i+1] == undefined) {
-                    history[i+1] = '';
+                    history[i+1] = ' - ';
                 }
 
                 historyObject.push({white: history[i], black: history[i+1]});
@@ -93,7 +93,7 @@ export default {
         /*
          * When the page first loads, get the game and potential history from the server
          */
-        getGameFromServer: function (uid) {
+        getGameFromServer(uid) {
             this.$http.get('/api/game/' + uid)
                 .then((response) => {
                     if(response.data.pgn != null) {
@@ -115,7 +115,7 @@ export default {
         /*
          * After each move you make, send that move to the server
          */
-        sendMoveToServer: function (move) {
+        sendMoveToServer(move) {
             this.$http.post('/api/game/' + this.uid, {move:move})
                 .then((response) => {
                     // success
@@ -129,13 +129,17 @@ export default {
         /*
          * After getting the game from the server, update the board to reflect the current position
          */
-        updateBoard: function(g) {
-            this.game.load_pgn(g.pgn);
+        updateBoard(g) {
+            this.updateBoardByPGN(g.pgn);
+        },
+
+        updateBoardByPGN(pgn) {
+            this.game.load_pgn(pgn);
             this.onSnapEnd();
             this.history = this.historyToArrayOfObjects(this.game.history());
         },
 
-        updateTurn: function(){
+        updateTurn() {
             if((this.game.turn() == 'b' && this.color == 'black') || (this.game.turn() == 'w' && this.color == 'white')) {
                 this.pturn = true;
                 this.oturn = false;
@@ -143,6 +147,14 @@ export default {
                 this.pturn = false;
                 this.oturn = true;
             }
+        },
+
+        listen() {
+            echo.channel('abinachess_move.' + this.uid)
+                .listen('MoveWasMade', function(event) {
+                    this.updateBoardByPGN(event.pgn);
+                    this.updateTurn();
+                }.bind(this));
         }
     },
 
@@ -167,6 +179,9 @@ export default {
 
         // whose turn is it?
         this.updateTurn();
+
+        // listen for incoming moves
+        this.listen();
     }
 }
 </script>

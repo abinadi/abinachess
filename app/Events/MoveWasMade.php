@@ -5,8 +5,6 @@ namespace AbinaChess\Events;
 use AbinaChess\Game;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -14,25 +12,27 @@ class MoveWasMade extends Event implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-	/**
-	 * @var string
-	 */
-	public $uid;
+    /**
+     * @var string
+     */
+    public $uid;
 
-	/**
-	 * @var string
-	 */
-	public $pgn;
+    /**
+     * @var string
+     */
+    public $pgn;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Game $game
      */
     public function __construct(Game $game)
     {
-		$this->uid = $game->uid;
-		$this->pgn = $game->pgn;
+        $this->uid = $game->uid;
+        $this->pgn = $game->pgn;
+
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**

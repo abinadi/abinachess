@@ -1,5 +1,5 @@
 <template>
-    <section id="gamePlay">
+    <section id="gamePlay" v-autoscroll="moves">
     <table class="table table-striped">
         <thead>
         <th>&nbsp;</th>

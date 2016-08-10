@@ -17,12 +17,12 @@ Route::post('broadcasting/socket', function() {
 /**
  * Process mini join form from the home page
  */
-Route::post('join', function (Request $request) {
-	if(Game::uidExists($request->input('uid'))) {
+Route::post('join', function (Illuminate\Http\Request $request) {
+	if(AbinaChess\Game::uidExists($request->input('uid'))) {
 		return redirect()->route('game.join', ['uid' => $request->input('uid')]);
 	}
 
-	return redirect('/')->with(['message' => 'That game does not exist.']);
+	return redirect('/')->withErrors(['message' => 'That game does not exist.']);
 });
 
 /**
