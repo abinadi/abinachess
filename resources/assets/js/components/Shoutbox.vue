@@ -55,7 +55,7 @@ export default {
         listen() {
             echo.channel('abinachess_shout.' + this.uid)
                 .listen('ShoutWasPosted', function(event) {
-					setTimeout((function() { this.glow = false; }).bind(this),1000);
+					setTimeout((function() { this.glow = false; }).bind(this),3000);
 					this.glow = false;
                     this.shouts.push(event.shout);
 
@@ -90,7 +90,7 @@ export default {
 		0% {
 			box-shadow: none;
 		}
-		50% {
+		65% {
 			box-shadow: 0 0 15px 15px rgba(255,255,190,.75);
 		}
 		100% {
@@ -100,6 +100,6 @@ export default {
 
 	.glow {
 		animation-name: glower;
-		animation-duration: 4s;
+		animation-duration: 3s;
 	}
 </style>
