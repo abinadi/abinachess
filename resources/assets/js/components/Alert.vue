@@ -26,16 +26,24 @@
         },
 
         events: {
-            'new-alert': function(alertObj) {
+            'game-alert': function(alertObj) {
+                this.handleAlert(alertObj);
+            },
+
+            'shout-alert': function(alertObj) {
+                this.handleAlert(alertObj);
+            }
+        },
+
+        methods: {
+            handleAlert(alertObj) {
                 this.type = alertObj.type;
                 this.show = true;
                 this.important = alertObj.import;
 
                 this.fadeAway();
-            }
-        },
+            },
 
-        methods: {
             fadeAway() {
                 if ( ! this.important) {
                     setTimeout(

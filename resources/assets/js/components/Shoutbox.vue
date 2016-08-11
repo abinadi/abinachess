@@ -59,7 +59,7 @@ export default {
                     this.shouts.push(event.shout);
 
                     this.alertObj.message = 'New chat';
-                    this.$broadcast('new-alert', this.alertObj);
+                    this.$broadcast('shout-alert', this.alertObj);
                 }.bind(this));
         }
     },

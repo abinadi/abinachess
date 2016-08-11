@@ -25,8 +25,8 @@ import Echo from "laravel-echo";
 
 window.echo = new Echo({
     connector: 'pusher',
-    pusherKey: 'd3b2371175bc87a5b41c', // dev
-    // pusherKey: 'cd4bea636a1e2a99cfec', // prod
+    // pusherKey: 'd3b2371175bc87a5b41c', // dev
+    pusherKey: 'cd4bea636a1e2a99cfec', // prod
 	namespace: 'AbinaChess.Events'
 });
 

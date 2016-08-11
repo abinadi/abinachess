@@ -1,6 +1,4 @@
 <template>
-    <alert>{{ alertObj.message }}</alert>
-
     <div class="col-md-8">
         <p class="player_opponent" v-bind:class="{ 'active' : oturn }">{{ opponent }}</p>
         <div id="board"></div>
@@ -93,7 +91,9 @@ export default {
                 this.alertObj.message = 'Stalemate';
             }
 
-            this.$broadcast('new-alert', this.alertObj);
+            if(this.alertObj.message != '') {
+                this.$broadcast('game-alert', this.alertObj);
+            }
         },
 
         resetAlertObj() {
