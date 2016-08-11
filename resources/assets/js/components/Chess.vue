@@ -1,4 +1,6 @@
 <template>
+    <alert>{{ alertObj.message }}</alert>
+
     <div class="col-md-8">
         <p class="player_opponent" v-bind:class="{ 'active' : oturn }">{{ opponent }}</p>
         <div id="board"></div>
@@ -28,7 +30,12 @@ export default {
             name: player,
             opponent: null,
             oturn: false,
-            pturn: false
+            pturn: false,
+            alertObj: {
+                type: 'info',
+                message: '',
+                import: false
+            }
         };
     },
 
@@ -60,8 +67,41 @@ export default {
             // Send move to server
             this.sendMoveToServer(move);
 
+            // Alerts for game situations
+            this.gameChecks();
+
             // Update whose turn it is
             this.updateTurn();
+        },
+
+        gameChecks() {
+            // baseline
+            this.resetAlertObj();
+
+            if(this.game.in_checkmate()) {
+                this.alertObj.type = 'danger';
+                this.alertObj.import = true;
+                this.alertObj.message = 'Checkmate!!';
+            } else if(this.game.in_check()) {
+                this.alertObj.type = 'warning';
+                this.alertObj.message = 'Check!';
+            } else if(this.game.in_draw()) {
+                this.alertObj.type = 'warning';
+                this.alertObj.message = 'Draw';
+            } else if(this.game.in_stalemate()) {
+                this.alertObj.type = 'warning';
+                this.alertObj.message = 'Stalemate';
+            }
+
+            this.$broadcast('new-alert', this.alertObj);
+        },
+
+        resetAlertObj() {
+            this.alertObj = {
+                type: 'info',
+                message: '',
+                import: false
+            };
         },
 
         canMove() {
@@ -168,6 +208,7 @@ export default {
                 .listen('MoveWasMade', function(event) {
                     this.updateBoardByPGN(event.pgn);
                     this.updateTurn();
+                    this.gameChecks();
                 }.bind(this));
         }
     },

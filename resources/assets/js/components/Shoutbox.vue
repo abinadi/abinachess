@@ -1,4 +1,6 @@
 <template>
+    <alert>{{ alertObj.message }}</alert>
+
     <section id="shoutbox-area">
         <ul class="list-group" v-autoscroll="shouts">
             <li v-for="shout in shouts">
@@ -17,7 +19,12 @@ export default {
 			shout: '',
             uid: gameUid,
 			player: player,
-			color: color
+			color: color,
+            alertObj: {
+                type: 'info',
+                message: '',
+                import: false
+            }
         }
     },
 
@@ -50,6 +57,9 @@ export default {
             echo.channel('abinachess_shout.' + this.uid)
                 .listen('ShoutWasPosted', function(event) {
                     this.shouts.push(event.shout);
+
+                    this.alertObj.message = 'New chat';
+                    this.$broadcast('new-alert', this.alertObj);
                 }.bind(this));
         }
     },

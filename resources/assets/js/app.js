@@ -19,6 +19,7 @@ Vue.directive('autoscroll', {
     }
 });
 
+Vue.component('alert', require('./components/Alert.vue'));
 Vue.component('game-history', require('./components/GameHistory.vue'));
 Vue.component('shoutbox', require('./components/Shoutbox.vue'));
 Vue.component('chess', require('./components/Chess.vue'));
