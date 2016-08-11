@@ -1,13 +1,11 @@
 <template>
     <div class="col-md-8">
-        <p class="player_opponent" v-bind:class="{ 'active' : oturn }">{{ opponent }}</p>
         <div id="board"></div>
-        <p class="player_name" v-bind:class="{ 'active' : pturn }">{{ name }}</p>
     </div>
 
     <aside id="sidebar" class="col-md-4">
         <section id="gameUid">
-            <h2>Game UID: {{ uid }}</h2>
+            <h2>{{ uid }} <small>{{ turn }}</small></h2>
         </section>
 
         <game-history :moves="history"></game-history>
@@ -27,6 +25,7 @@ export default {
             color: color,
             name: player,
             opponent: null,
+			turn: '',
             oturn: false,
             pturn: false,
             alertObj: {
@@ -67,12 +66,11 @@ export default {
 
             // Alerts for game situations
             this.gameChecks();
-
-            // Update whose turn it is
-            this.updateTurn();
         },
 
         gameChecks() {
+			var gameover = false;
+
             // baseline
             this.resetAlertObj();
 
@@ -80,16 +78,22 @@ export default {
                 this.alertObj.type = 'danger';
                 this.alertObj.import = true;
                 this.alertObj.message = 'Checkmate!!';
+				gameover = true;
             } else if(this.game.in_check()) {
                 this.alertObj.type = 'warning';
                 this.alertObj.message = 'Check!';
             } else if(this.game.in_draw()) {
                 this.alertObj.type = 'warning';
                 this.alertObj.message = 'Draw';
+				gameover = true;
             } else if(this.game.in_stalemate()) {
                 this.alertObj.type = 'warning';
                 this.alertObj.message = 'Stalemate';
-            }
+				gameover = true;
+			}
+
+            // Update whose turn it is
+            this.updateTurn(gameover);
 
             if(this.alertObj.message != '') {
                 this.$dispatch('game-alert', this.alertObj);
@@ -159,7 +163,7 @@ export default {
                         this.opponent = w;
                     }
 
-                    this.updateTurn();
+					this.gameChecks();
                 }, (response) => {
                     console.log('error');
                     console.log(response);
@@ -193,14 +197,20 @@ export default {
             this.history = this.historyToArrayOfObjects(this.game.history());
         },
 
-        updateTurn() {
+        updateTurn(gameover = null) {
             if((this.game.turn() == 'b' && this.color == 'black') || (this.game.turn() == 'w' && this.color == 'white')) {
+				this.turn = this.name + "'s turn";
                 this.pturn = true;
                 this.oturn = false;
             } else {
+				this.turn = this.opponent + "'s turn";
                 this.pturn = false;
                 this.oturn = true;
             }
+
+			if(gameover) {
+				this.turn = 'Game Over';
+			}
         },
 
         listen() {
@@ -214,6 +224,7 @@ export default {
     },
 
     ready() {
+
         // Have chess.js keep track of the game play
         this.game = new Chess();
 
@@ -232,8 +243,8 @@ export default {
         // Bring in game from the server
         this.getGameFromServer(this.uid);
 
-        // whose turn is it?
-        this.updateTurn();
+        // Check if the game is over, whose turn, etc.
+		this.gameChecks();
 
         // listen for incoming moves
         this.listen();
