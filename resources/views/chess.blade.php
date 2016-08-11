@@ -9,6 +9,8 @@
 @section('content')
 
     <div class="container">
+		<alert></alert>
+
         <chess></chess>
     </div>
 

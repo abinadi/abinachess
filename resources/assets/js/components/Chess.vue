@@ -92,7 +92,7 @@ export default {
             }
 
             if(this.alertObj.message != '') {
-                this.$broadcast('game-alert', this.alertObj);
+                this.$dispatch('game-alert', this.alertObj);
             }
         },
 

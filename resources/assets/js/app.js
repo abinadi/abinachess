@@ -25,5 +25,14 @@ Vue.component('shoutbox', require('./components/Shoutbox.vue'));
 Vue.component('chess', require('./components/Chess.vue'));
 
 var app = new Vue({
-    el: 'body'
+    el: 'body',
+
+	events: {
+		'shout-alert': function(alertObj) {
+			this.$broadcast('alert', alertObj);
+		},
+		'game-alert': function(alertObj) {
+			this.$broadcast('alert', alertObj);
+		}
+	}
 });

@@ -1,8 +1,6 @@
 <template>
-    <alert>{{ alertObj.message }}</alert>
-
     <section id="shoutbox-area">
-        <ul class="list-group" v-autoscroll="shouts">
+        <ul class="list-group" v-autoscroll="shouts" :class="{'glow': glow}">
             <li v-for="shout in shouts">
                 <strong>{{ shout.name }}</strong>: {{ shout.shout }}
             </li>
@@ -24,7 +22,8 @@ export default {
                 type: 'info',
                 message: '',
                 import: false
-            }
+            },
+			glow: false
         }
     },
 
@@ -56,10 +55,13 @@ export default {
         listen() {
             echo.channel('abinachess_shout.' + this.uid)
                 .listen('ShoutWasPosted', function(event) {
+					setTimeout((function() { this.glow = false; }).bind(this),1000);
+					this.glow = false;
                     this.shouts.push(event.shout);
 
                     this.alertObj.message = 'New chat';
-                    this.$broadcast('shout-alert', this.alertObj);
+                    this.$dispatch('shout-alert', this.alertObj);
+					setTimeout((function() { this.glow = true; }).bind(this),500);
                 }.bind(this));
         }
     },
@@ -77,9 +79,27 @@ export default {
         height: 350px;
         max-height: 350px;
         overflow: scroll;
+		transition: all 3s ease;
     }
 
     #shoutbox-area ul li:nth-child(odd) {
         background-color: #CCC;
     }
+
+	@keyframes glower {
+		0% {
+			box-shadow: none;
+		}
+		50% {
+			box-shadow: 0 0 15px 15px rgba(255,255,190,.75);
+		}
+		100% {
+			box-shadow: none;
+		}
+	}
+
+	.glow {
+		animation-name: glower;
+		animation-duration: 4s;
+	}
 </style>
