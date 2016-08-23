@@ -3,8 +3,8 @@
     <table class="table table-striped">
         <thead>
         <th>&nbsp;</th>
-        <th>White</th>
-        <th>Black</th>
+        <th>White ({{white}})</th>
+        <th>Black ({{black}})</th>
         <thead>
         <tbody>
             <tr v-for="(index, move) in moves">
@@ -19,7 +19,7 @@
 
 <script type="text/babel">
 export default {
-    props: ['moves'],
+    props: ['moves','white','black'],
 
     ready() {
     }

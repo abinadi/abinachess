@@ -5,10 +5,10 @@
 
     <aside id="sidebar" class="col-md-4">
         <section id="gameUid">
-            <h2>{{ uid }} <small>{{ turn }}</small></h2>
+            <h2>{{ uid }} <small class="pull-right">{{{ turn }}}</small></h2>
         </section>
 
-        <game-history :moves="history"></game-history>
+        <game-history :moves="history" :white="whitePlayerName" :black="blackPlayerName"></game-history>
 
         <shoutbox></shoutbox>
     </aside>
@@ -24,6 +24,8 @@ export default {
             uid: gameUid,
             color: color,
             name: player,
+            whitePlayerName: null,
+            blackPlayerName: null,
             opponent: null,
 			turn: '',
             oturn: false,
@@ -164,6 +166,7 @@ export default {
                     }
 
 					this.gameChecks();
+                    this.setPlayerNames();
                 }, (response) => {
                     console.log('error');
                     console.log(response);
@@ -198,12 +201,14 @@ export default {
         },
 
         updateTurn(gameover = null) {
+            var img = '<img src="/img/chesspieces/wikipedia/' + this.game.turn() + 'N.png"> ';
+
             if((this.game.turn() == 'b' && this.color == 'black') || (this.game.turn() == 'w' && this.color == 'white')) {
-				this.turn = this.name + "'s turn";
+				this.turn = img + this.name + "'s turn";
                 this.pturn = true;
                 this.oturn = false;
             } else {
-				this.turn = this.opponent + "'s turn";
+				this.turn = img + this.opponent + "'s turn";
                 this.pturn = false;
                 this.oturn = true;
             }
@@ -211,6 +216,16 @@ export default {
 			if(gameover) {
 				this.turn = 'Game Over';
 			}
+        },
+
+        setPlayerNames() {
+            if(this.color == "white") {
+                this.whitePlayerName = this.name;
+                this.blackPlayerName = this.opponent;
+            } else {
+                this.whitePlayerName = this.opponent;
+                this.blackPlayerName = this.name;
+            }
         },
 
         listen() {
@@ -224,7 +239,6 @@ export default {
     },
 
     ready() {
-
         // Have chess.js keep track of the game play
         this.game = new Chess();
 
@@ -257,5 +271,11 @@ export default {
         background-color: crimson;
         color: #ffffff;
         font-weight: bold;
+    }
+
+    #gameUid small img {
+        width: 25px;
+        height: 25px;
+        vertical-align: text-bottom;
     }
 </style>

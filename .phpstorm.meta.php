@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2016-08-10.
+    * Generated on 2016-08-23.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -31,6 +31,7 @@ namespace PHPSTORM_META {
             'files' instanceof \Illuminate\Filesystem\Filesystem,
             'filesystem' instanceof \Illuminate\Filesystem\FilesystemManager,
             'filesystem.disk' instanceof \Illuminate\Filesystem\FilesystemAdapter,
+            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'session' instanceof \Illuminate\Session\SessionManager,
             'session.store' instanceof \Illuminate\Session\Store,
             'Illuminate\Session\Middleware\StartSession' instanceof \Illuminate\Session\Middleware\StartSession,
@@ -73,6 +74,7 @@ namespace PHPSTORM_META {
             'command.middleware.make' instanceof \Illuminate\Routing\Console\MiddlewareMakeCommand,
             'command.model.make' instanceof \Illuminate\Foundation\Console\ModelMakeCommand,
             'command.notification.make' instanceof \Illuminate\Foundation\Console\NotificationMakeCommand,
+            'command.notification.table' instanceof \Illuminate\Notifications\Console\NotificationTableCommand,
             'command.policy.make' instanceof \Illuminate\Foundation\Console\PolicyMakeCommand,
             'command.provider.make' instanceof \Illuminate\Foundation\Console\ProviderMakeCommand,
             'command.queue.failed-table' instanceof \Illuminate\Queue\Console\FailedTableCommand,
@@ -103,7 +105,6 @@ namespace PHPSTORM_META {
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
-            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
             'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
@@ -144,6 +145,7 @@ namespace PHPSTORM_META {
             'files' instanceof \Illuminate\Filesystem\Filesystem,
             'filesystem' instanceof \Illuminate\Filesystem\FilesystemManager,
             'filesystem.disk' instanceof \Illuminate\Filesystem\FilesystemAdapter,
+            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'session' instanceof \Illuminate\Session\SessionManager,
             'session.store' instanceof \Illuminate\Session\Store,
             'Illuminate\Session\Middleware\StartSession' instanceof \Illuminate\Session\Middleware\StartSession,
@@ -186,6 +188,7 @@ namespace PHPSTORM_META {
             'command.middleware.make' instanceof \Illuminate\Routing\Console\MiddlewareMakeCommand,
             'command.model.make' instanceof \Illuminate\Foundation\Console\ModelMakeCommand,
             'command.notification.make' instanceof \Illuminate\Foundation\Console\NotificationMakeCommand,
+            'command.notification.table' instanceof \Illuminate\Notifications\Console\NotificationTableCommand,
             'command.policy.make' instanceof \Illuminate\Foundation\Console\PolicyMakeCommand,
             'command.provider.make' instanceof \Illuminate\Foundation\Console\ProviderMakeCommand,
             'command.queue.failed-table' instanceof \Illuminate\Queue\Console\FailedTableCommand,
@@ -216,7 +219,6 @@ namespace PHPSTORM_META {
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
-            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
             'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
@@ -257,6 +259,7 @@ namespace PHPSTORM_META {
             'files' instanceof \Illuminate\Filesystem\Filesystem,
             'filesystem' instanceof \Illuminate\Filesystem\FilesystemManager,
             'filesystem.disk' instanceof \Illuminate\Filesystem\FilesystemAdapter,
+            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'session' instanceof \Illuminate\Session\SessionManager,
             'session.store' instanceof \Illuminate\Session\Store,
             'Illuminate\Session\Middleware\StartSession' instanceof \Illuminate\Session\Middleware\StartSession,
@@ -299,6 +302,7 @@ namespace PHPSTORM_META {
             'command.middleware.make' instanceof \Illuminate\Routing\Console\MiddlewareMakeCommand,
             'command.model.make' instanceof \Illuminate\Foundation\Console\ModelMakeCommand,
             'command.notification.make' instanceof \Illuminate\Foundation\Console\NotificationMakeCommand,
+            'command.notification.table' instanceof \Illuminate\Notifications\Console\NotificationTableCommand,
             'command.policy.make' instanceof \Illuminate\Foundation\Console\PolicyMakeCommand,
             'command.provider.make' instanceof \Illuminate\Foundation\Console\ProviderMakeCommand,
             'command.queue.failed-table' instanceof \Illuminate\Queue\Console\FailedTableCommand,
@@ -329,7 +333,6 @@ namespace PHPSTORM_META {
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
-            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
             'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
@@ -370,6 +373,7 @@ namespace PHPSTORM_META {
             'files' instanceof \Illuminate\Filesystem\Filesystem,
             'filesystem' instanceof \Illuminate\Filesystem\FilesystemManager,
             'filesystem.disk' instanceof \Illuminate\Filesystem\FilesystemAdapter,
+            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'session' instanceof \Illuminate\Session\SessionManager,
             'session.store' instanceof \Illuminate\Session\Store,
             'Illuminate\Session\Middleware\StartSession' instanceof \Illuminate\Session\Middleware\StartSession,
@@ -412,6 +416,7 @@ namespace PHPSTORM_META {
             'command.middleware.make' instanceof \Illuminate\Routing\Console\MiddlewareMakeCommand,
             'command.model.make' instanceof \Illuminate\Foundation\Console\ModelMakeCommand,
             'command.notification.make' instanceof \Illuminate\Foundation\Console\NotificationMakeCommand,
+            'command.notification.table' instanceof \Illuminate\Notifications\Console\NotificationTableCommand,
             'command.policy.make' instanceof \Illuminate\Foundation\Console\PolicyMakeCommand,
             'command.provider.make' instanceof \Illuminate\Foundation\Console\ProviderMakeCommand,
             'command.queue.failed-table' instanceof \Illuminate\Queue\Console\FailedTableCommand,
@@ -442,7 +447,6 @@ namespace PHPSTORM_META {
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
-            'Illuminate\Notifications\ChannelManager' instanceof \Illuminate\Notifications\ChannelManager,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
             'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
